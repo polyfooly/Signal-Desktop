@@ -1167,6 +1167,8 @@ installSettingsGetter('notification-setting');
 installSettingsSetter('notification-setting');
 installSettingsGetter('audio-notification');
 installSettingsSetter('audio-notification');
+installSettingsGetter('groupchat-notification');
+installSettingsSetter('groupchat-notification');
 
 installSettingsGetter('spell-check');
 installSettingsSetter('spell-check');

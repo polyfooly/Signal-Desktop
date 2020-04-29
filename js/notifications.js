@@ -30,6 +30,12 @@
       .replace(/>/g, '&gt;');
   }
 
+  function isGroupchatId(conversationId) {
+    const groupchats = window.getConversations()._byGroupId;
+    const groupchatIds = Object.entries(groupchats).map(([_, group]) => group.id);
+    return conversationId in groupchatIds;
+  }
+
   Whisper.Notifications = new (Backbone.Collection.extend({
     initialize() {
       this.isEnabled = false;
@@ -56,6 +62,8 @@
       const isAppFocused = window.isActive();
       const isAudioNotificationEnabled =
         storage.get('audio-notification') || false;
+      const isGroupchatNotificationEnabled =
+        storage.get('groupchat-notification') || false;
       const isAudioNotificationSupported = Settings.isAudioNotificationSupported();
       const numNotifications = this.length;
       const userSetting = this.getUserSetting();
@@ -90,6 +98,13 @@
       }`;
 
       const last = this.last().toJSON();
+      if (
+        !isGroupchatNotificationEnabled &&
+        isGroupchatId(last.conversationId)
+      ) {
+        return;
+      }
+
       switch (userSetting) {
         case SettingNames.COUNT:
           title = 'Signal';

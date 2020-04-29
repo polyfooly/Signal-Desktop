@@ -330,6 +330,9 @@
         storage.put('notification-setting', value),
       getAudioNotification: () => storage.get('audio-notification'),
       setAudioNotification: value => storage.put('audio-notification', value),
+      getGroupchatNotification: () => storage.get('groupchat-notification'),
+      setGroupchatNotification: value =>
+        storage.put('groupchat-notification', value),
 
       getSpellCheck: () => storage.get('spell-check', true),
       setSpellCheck: value => {
