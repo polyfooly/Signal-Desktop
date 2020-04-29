@@ -28,6 +28,12 @@ jobs:
     - run: yarn generate
     - run: yarn prepare-beta-build
     - run: yarn build
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: result
+        path: release/
+
     - run: xvfb-run --auto-servernum yarn test-node
     - run: xvfb-run --auto-servernum yarn test-electron
       env:
@@ -36,3 +42,4 @@ jobs:
     - run: xvfb-run --auto-servernum yarn grunt test-release:linux
       env:
         NODE_ENV: production
+

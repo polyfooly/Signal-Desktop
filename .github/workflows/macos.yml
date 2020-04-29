@@ -26,6 +26,12 @@ jobs:
     - run: yarn generate
     - run: yarn prepare-beta-build
     - run: yarn build
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: result
+        path: release/
+
     - run: yarn test-node
     - run: yarn test-electron
     - run: yarn grunt test-release:osx
