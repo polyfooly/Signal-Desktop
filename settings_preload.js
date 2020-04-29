@@ -59,6 +59,8 @@ window.getNotificationSetting = makeGetter('notification-setting');
 window.setNotificationSetting = makeSetter('notification-setting');
 window.getAudioNotification = makeGetter('audio-notification');
 window.setAudioNotification = makeSetter('audio-notification');
+window.getGroupchatNotification = makeGetter('groupchat-notification');
+window.setGroupchatNotification = makeSetter('groupchat-notification');
 
 window.getMediaPermissions = makeGetter('media-permissions');
 window.setMediaPermissions = makeSetter('media-permissions');

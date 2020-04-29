@@ -103,6 +103,12 @@
         });
       }
       new CheckboxView({
+        el: this.$('.groupchat-notification-setting'),
+        name: 'groupchat-notification-setting',
+        value: window.initialData.groupchatNotification,
+        setFn: window.setGroupchatNotification,
+      });
+      new CheckboxView({
         el: this.$('.spell-check-setting'),
         name: 'spell-check-setting',
         value: window.initialData.spellCheck,
@@ -157,6 +163,8 @@
         noNameOrMessage: i18n('noNameOrMessage'),
         nameOnly: i18n('nameOnly'),
         audioNotificationDescription: i18n('audioNotificationDescription'),
+        groupchatNotificationDescription:
+          'Enable notifications for group messages', // todo: i18n
         isAudioNotificationSupported: Settings.isAudioNotificationSupported(),
         isHideMenuBarSupported: Settings.isHideMenuBarSupported(),
         hasSystemTheme: window.platform === 'darwin',

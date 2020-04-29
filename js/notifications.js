@@ -30,6 +30,15 @@
       .replace(/>/g, '&gt;');
   }
 
+  function isGroupchatId(conversationId) {
+    const groupchats = window.getConversations()._byGroupId;
+    const groupchatIds = Object.entries(groupchats).map(
+      ([name, group]) => group.id
+    );
+
+    return groupchatIds.includes(conversationId);
+  }
+
   Whisper.Notifications = new (Backbone.Collection.extend({
     initialize() {
       this.isEnabled = false;
@@ -56,6 +65,9 @@
       const isAppFocused = window.isActive();
       const isAudioNotificationEnabled =
         storage.get('audio-notification') || false;
+      const isGroupchatNotificationEnabled =
+        storage.get('groupchat-notification') || false;
+      console.info("Groupchat notifications enabled: ", isGroupchatNotificationEnabled);
       const isAudioNotificationSupported = Settings.isAudioNotificationSupported();
       const numNotifications = this.length;
       const userSetting = this.getUserSetting();
@@ -90,6 +102,13 @@
       }`;
 
       const last = this.last().toJSON();
+      if (
+        (!isGroupchatNotificationEnabled) &&
+        isGroupchatId(last.conversationId)
+      ) {
+        return;
+      }
+
       switch (userSetting) {
         case SettingNames.COUNT:
           title = 'Signal';
@@ -154,13 +173,13 @@
             `Error: Unknown user notification setting: '${userSetting}'`
           );
           break;
-      }
+      };
 
       const shouldHideExpiringMessageBody =
         last.isExpiringMessage && Signal.OS.isMacOS();
       if (shouldHideExpiringMessageBody) {
         message = i18n('newMessage');
-      }
+      };
 
       drawAttention();
 

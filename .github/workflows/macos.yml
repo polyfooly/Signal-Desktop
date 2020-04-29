@@ -1,0 +1,39 @@
+name: macos build
+
+on: [push]
+
+jobs:
+  macos:
+    runs-on: macos-latest
+
+    steps:
+    - run: uname -a
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.13.0'
+    - run: npm install -g yarn@1.22.0
+
+    - name: Cache node modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock') }}-${{ hashFiles('patches/*') }}
+
+    - run: yarn install --frozen-lockfile
+    - run: yarn generate
+    - run: yarn prepare-beta-build
+    - run: yarn build
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: result
+        path: release/
+
+    - run: yarn test-node
+    - run: yarn test-electron
+    - run: yarn grunt test-release:osx
+      env:
+        NODE_ENV: production

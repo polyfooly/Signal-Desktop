@@ -138,6 +138,8 @@ try {
   installSetter('notification-setting', 'setNotificationSetting');
   installGetter('audio-notification', 'getAudioNotification');
   installSetter('audio-notification', 'setAudioNotification');
+  installGetter('groupchat-notification', 'getGroupchatNotification');
+  installSetter('groupchat-notification', 'setGroupchatNotification');
 
   installGetter('spell-check', 'getSpellCheck');
   installSetter('spell-check', 'setSpellCheck');
