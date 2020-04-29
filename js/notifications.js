@@ -32,7 +32,9 @@
 
   function isGroupchatId(conversationId) {
     const groupchats = window.getConversations()._byGroupId;
-    const groupchatIds = Object.entries(groupchats).map(([_, group]) => group.id);
+    const groupchatIds = Object.entries(groupchats).map(
+      ([_, group]) => group.id
+    );
     return conversationId in groupchatIds;
   }
 
